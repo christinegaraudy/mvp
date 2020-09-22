@@ -14,10 +14,11 @@ const recipeFetcher = async (...ingredients) => {
   }).join('');
   const res = await axios.get(`${apiURL}${mappedIngredients}&to=25${apiId}${apiKey}`);
   const recipes = res.data;
-  console.log(recipes);
+  // console.log(recipes);
+  return recipes;
 }
 
-recipeFetcher("avocado", "lime", "salt");
+// recipeFetcher("avocado", "lime", "salt");
 
 module.exports = recipeFetcher;
 

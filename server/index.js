@@ -4,6 +4,7 @@ require ('dotenv').config();
 const bodyParser = require('body-parser');
 const dbConnection = require('./db/index.js');
 const path = require('path');
+const recipeFetcher = require('./api/recipes.js');
 
 const app = express();
 const port = process.env.port || 8080;
@@ -16,6 +17,13 @@ app.listen(port, () => {
 })
 
 app.use('/', express.static(__dirname + '/../client/dist'));
+
+app.get('/api/search', (req, res) => {
+  recipeFetcher('muffins')
+  .then(data => {
+    res.send(data);
+  })
+});
 
 //function to retrieve recipes from database (this is where you db.query)
 const getFaves = (cb) => {

@@ -16,18 +16,19 @@ class App extends React.Component {
     recipes: []
   }
 
-  componentDidMount = () => {
-    this.recipeSearch('muffins');
-  }
+  // componentDidMount = () => {
+  //   this.recipeSearch('muffins');
+  // }
 
-  recipeSearch = async (event) => {
+  recipeSearch = (event) => {
     const recipeName = event.target.elements.recipeName.value;
     event.preventDefault();
   
-    const data = await axios.get(`${apiURL}${recipeName}&to=25${apiId}${apiKey}`);
-   
-    this.setState({ recipes: data.recipes })
-    console.log(this.state.recipes);
+    axios.get('/api/search')
+      .then(({data}) => {
+        console.log(data);
+        this.setState({ recipes: data })
+      })
   }
 
   render() {
