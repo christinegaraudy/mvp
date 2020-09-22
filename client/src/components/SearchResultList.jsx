@@ -1,9 +1,10 @@
-// import React from 'react';
+import React from 'react';
+import SearchResultItem from './SearchResultItem.jsx';
 
-// const SearchResultList = ({ recipes }) => (
-//   <div className="search-result-list"> 
-//     {recipes.map(recipe => <SearchResultItem recipe={recipe}/>)}
-//   </div>
-// );
+const SearchResultList = ({ recipes }) => (
+  <div className="search-result-list"> 
+    {recipes.map(({ recipe })=> <SearchResultItem recipe={recipe} key={recipe.label}/>)}
+  </div>
+);
 
-// export default SearchResultList;
+export default SearchResultList;
