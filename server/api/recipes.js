@@ -17,7 +17,7 @@ const recipeFetcher = async (...ingredients) => {
   console.log(recipes);
 }
 
-// recipeFetcher("avocado", "lime", "salt");
+recipeFetcher("avocado", "lime", "salt");
 
 module.exports = recipeFetcher;
 
