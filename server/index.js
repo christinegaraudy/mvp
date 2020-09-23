@@ -30,9 +30,12 @@ app.get('/api/search/:query', (req, res) => {
 });
 
 //function to retrieve recipes from database (this is where you db.query)
-const getFaves = (cb) => {
-  dbConnection.query('SELECT * FROM saved_recipes;', (error, recipes) => {
-    cb(error, recipes);
+const getFaves = () => {
+  dbConnection.query('SELECT * FROM saved_recipes;', (error, results) => {
+    if (error) {
+      return console.error(error);
+    }
+    console.log('Grabbed items', results.affectedRows)
   })
 };
 
@@ -41,14 +44,7 @@ const getFaves = (cb) => {
   //page loads, displaying them on right div (refresh button?) grab the recipes from the database
     //use getFaves
 app.get('/api/recipes', (req, res) => {
-  getFaves((error, recipes) => {
-    if (error) {
-      console.log(error);
-      res.sendStatus(500);
-    } else {
-      res.send(recipes);
-    }
-  })
+  getFaves();
 });
 
 //function to save recipes to database

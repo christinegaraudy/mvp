@@ -38,6 +38,7 @@ class App extends React.Component {
         <Search recipeSearch={this.recipeSearch}/>
           <h3>You just searched for {q} !!</h3>
           <SearchResultList recipes={recipes}/>
+          {/* <FavoritesList/> */}
       </div>
     )
   }

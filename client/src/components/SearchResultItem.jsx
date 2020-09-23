@@ -4,6 +4,7 @@ import React from 'react';
 
 const SearchResultItem = ({ recipe }) => {
   const { image, label } = recipe;
+    
     const saveRecipe = () => {
       axios.post('/saveRecipe', { image, label })
         .then((response) => {
@@ -13,6 +14,7 @@ const SearchResultItem = ({ recipe }) => {
           console.log(error);
         })
     }
+
     const deleteRecipe = () => {
       axios.post('/deleteRecipe', { image, label })
       .then((response) => {
@@ -22,7 +24,6 @@ const SearchResultItem = ({ recipe }) => {
         console.log(error);
       })
     }
-  
 
   return (
 
