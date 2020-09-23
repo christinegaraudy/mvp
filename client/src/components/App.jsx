@@ -20,12 +20,10 @@ class App extends React.Component {
   }
 
   recipeSearch(query) {
-  // { query }
     axios.get(`/api/search/${query}`)
       .then(({data}) => {
         this.setState({ recipes: data.hits, q: data.q })
         console.log(data);
-
       })
   }
 

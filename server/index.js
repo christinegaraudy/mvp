@@ -58,7 +58,7 @@ const saveFaves = (title, image) => {
     if (error) {
       return console.error(error)
     }
-    console.log('Rows affected', results.affectedRows)
+    console.log('Rows added', results.affectedRows)
     return results
   });
 };
@@ -84,13 +84,23 @@ const editFaves = () => {
 // app.put()
 
 //function that removes recipe
-const deleteFaves = () => {
-
+const deleteFaves = (title) => {
+  const data = [title]
+  dbConnection.query(`DELETE FROM saved_recipes WHERE title = ?;`, title, (error, results) => {
+    if (error) {
+      return console.error(error)
+    }
+    console.log('Deleted rows', results.affectedRows)
+    return results
+  });
 };
 
 //delete
   //make a button that lets you delete
-
+app.post('/deleteRecipe', (req, res) => {
+  const { label } = req.body;
+  deleteFaves(label) 
+});
 
 
 
