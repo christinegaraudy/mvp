@@ -4,11 +4,18 @@ import axios from 'axios';
 import Search from './Search.jsx';
 import fakeData from '../data/fakeData.js';
 import SearchResultList from './SearchResultList.jsx';
+import styled from 'styled-components';
 // import FavoritesList from './FavoritesList.jsx'
 
-const apiURL = "https://api.edamam.com/search?q=";
-const apiKey = "&app_key=5291ba5e2ba5828a79406b31a2c3bf77";
-const apiId = "&app_id=443d8375";
+const AppStyle = styled.div`
+  width: 800px;
+  margin: 0 auto;
+  box-shadow: 0 0 8px #ccc;
+  header h1 {
+    text-align: center;
+  }
+`;
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -31,15 +38,15 @@ class App extends React.Component {
   render() {
     const { recipes, q } = this.state;
     return (
-      <div>
+      <AppStyle>
         <header>
           <h1>Recipe Finder</h1>
         </header>
         <Search recipeSearch={this.recipeSearch}/>
-          <h3>You just searched for {q} !!</h3>
+          <h3 align="center">You just searched for {q} !!</h3>
           <SearchResultList recipes={recipes}/>
           {/* <FavoritesList/> */}
-      </div>
+      </AppStyle>
     )
   }
 };
