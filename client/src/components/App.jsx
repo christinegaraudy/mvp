@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Search from './Search.jsx';
 import fakeData from '../data/fakeData.js';
-// import SearchResultItem from './SearchResultItem.jsx';
 import SearchResultList from './SearchResultList.jsx';
 // import FavoritesList from './FavoritesList.jsx'
 
@@ -14,15 +13,15 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      q: fakeData.q,
-      recipes: fakeData.hits,
+      q: '',
+      recipes: [],
     }
     this.recipeSearch = this.recipeSearch.bind(this);
   }
 
   recipeSearch(query) {
-  
-    axios.get('/api/search', {query})
+  // { query }
+    axios.get(`/api/search/${query}`)
       .then(({data}) => {
         this.setState({ recipes: data.hits, q: data.q })
         console.log(data);
@@ -38,7 +37,6 @@ class App extends React.Component {
         <header>
           <h1>Recipe Finder</h1>
         </header>
-          <div>{recipes.length ? recipes[0].recipe.calories.toFixed(2) : ''}</div>
         <Search recipeSearch={this.recipeSearch}/>
           <h3>You just searched for {q} !!</h3>
           <SearchResultList recipes={recipes}/>

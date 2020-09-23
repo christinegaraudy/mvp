@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const dbConnection = require('./db/index.js');
 const path = require('path');
 const recipeFetcher = require('./api/recipes.js');
+// const { Sequelize } = require('sequelize');
+
 
 const app = express();
 const port = process.env.port || 8080;
@@ -18,8 +20,10 @@ app.listen(port, () => {
 
 app.use('/', express.static(__dirname + '/../client/dist'));
 
-app.get('/api/search', (req, res) => {
-  recipeFetcher('muffins')
+app.get('/api/search/:query', (req, res) => {
+  const { params } = req;
+  const { query } = params;
+  recipeFetcher(query)
   .then(data => {
     res.send(data);
   })
@@ -48,25 +52,25 @@ app.get('/api/recipes', (req, res) => {
 });
 
 //function to save recipes to database
-const saveFaves = (title, cb) => {
-  dbConnection.query(`INSERT INTO saved_recipes (title) VALUES ('${title}');`, (error, rows) => {
-    cb(error, rows);
+const saveFaves = (title, image) => {
+  const data = [title, image]
+  dbConnection.query(`INSERT INTO saved_recipes (image, title) VALUES (?, ?);`, data, (error, results) => {
+    if (error) {
+      return console.error(error)
+    }
+    console.log('Rows affected', results.affectedRows)
+    return results
   });
 };
+
+// INSERT INTO `table_name`(column_1,column_2,...) VALUES (value_1,value_2,...);
 
 //post
   //saving info.  save a recipe to faves. (each one will have a button to save)  store the recipe 
   //in the database
-app.post('/add', (req, res) => {
-  const { label } = req.body.recipe
-  saveFaves(label, (error, response) => {
-    if (error) {
-      console.log(error);
-      res.sendStatus(500, 'Oops, error');
-    } else {
-      res.send(response, 'Successfully added');
-    }
-  })
+app.post('/saveRecipe', (req, res) => {
+  const { image, label } = req.body;
+  saveFaves(image, label) 
 });
 
 //function that lets you change title
